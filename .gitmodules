@@ -1,0 +1,3 @@
+[submodule "trainer"]
+	path = trainer
+	url = git@gitlab.com:fantine/trainer.git
