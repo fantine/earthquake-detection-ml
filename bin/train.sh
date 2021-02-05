@@ -19,8 +19,8 @@ label=$3
 
 # Set path to input data
 datapath="/scr1/fantine/sdasa"
-train_file="${datapath}/tfrecords/${dataset}/${dataset}-train-*.tfrecord.gz"
-eval_file="${datapath}/tfrecords/${dataset}/${dataset}-eval-*.tfrecord.gz"
+train_file="${datapath}/tfrecords/${dataset}-train-*.tfrecord.gz"
+eval_file="${datapath}/tfrecords/${dataset}-eval-*.tfrecord.gz"
 
 # Check the ML model config file
 config_file=config/$model_config.sh
