@@ -1,3 +1,6 @@
 [submodule "trainer"]
 	path = trainer
 	url = git@gitlab.com:fantine/trainer.git
+[submodule "hptuning"]
+	path = hptuning
+	url = git@gitlab.com:fantine/hptuning.git
