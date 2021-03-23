@@ -7,3 +7,6 @@
 [submodule "plot_utils"]
 	path = plot_utils
 	url = git@gitlab.com:fantine/plot-utils.git
+[submodule "processing_utils"]
+	path = processing_utils
+	url = git@gitlab.com:fantine/processing-utils.git
