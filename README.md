@@ -13,6 +13,8 @@ git submodule init
 git submodule update
 ```
 
+`git submodule foreach git pull origin master`
+
 ### Requirements
 
 - TensorFlow
@@ -52,3 +54,5 @@ other models inside the folder for examples.
 - Reference your new model in `trainer/model/__init__.py`.
 - Set the `model` argument to your new model's name in your model configuration
 file `config/your_model_config.sh`.
+
+
