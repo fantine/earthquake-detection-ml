@@ -1,0 +1,7 @@
+manifest_file: tfrecords/manifests/das_med_prob_balanced_eval_manifest.txt
+output_file_prefix: tfrecords/das_med_prob_balanced/eval
+input_width: 288
+input_height: 695
+num_shards: 1
+min_val: -2.1995878
+max_val: 2.1995878
