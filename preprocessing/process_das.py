@@ -16,10 +16,10 @@ logging.basicConfig(level=logging.INFO)
 def _process(data, low_freq, high_freq, dt, clip_percentile, q):
   data = processing.get_strain_rate(data)
   data = processing.remove_median(data)
-  data = processing.clip(data, clip_percentile)
+  # data = processing.clip(data, clip_percentile)
   data = processing.bandpass(data, low_freq, high_freq, dt)
   data = processing.decimate(data, q)
-  data = processing.normalize(data)
+  # data = processing.normalize(data)
   return data
 
 
@@ -74,7 +74,8 @@ def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
 def main():
   datatype = 'das'
   datapath = os.path.join(parameters.raw_datapath, datatype)
-  file_pattern = os.path.join(datapath, '*/*/*')
+  # file_pattern = os.path.join(datapath, '*/*/*')
+  file_pattern = os.path.join(datapath, 'event/00000/event_000*')
   process(
       file_pattern,
       in_dir=parameters.raw_datapath,
