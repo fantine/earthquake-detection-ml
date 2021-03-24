@@ -60,6 +60,7 @@ def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
     data = _crop(data, raw_window, detect_window, event_duration, dt * q)
     label = _get_label(filename)
     out_file = filename.replace(in_dir, out_dir)
+    os.makedirs(os.path.dirname(out_file), exist_ok=True)
     data1 = data[channel_subset1]
     data2 = data[channel_subset2]
     out_file1 = out_file.replace('.hdf5', '_1.h5')
