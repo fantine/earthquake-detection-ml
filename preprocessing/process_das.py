@@ -1,7 +1,7 @@
 """DAS data processing."""
 
+import logging
 import os
-import random
 
 import h5py
 import numpy as np
@@ -10,7 +10,7 @@ from processing_utils import processing_utils as processing
 from preprocessing import parameters
 
 
-random.seed(42)
+logging.basicConfig(level=logging.INFO)
 
 
 def _process(data, low_freq, high_freq, dt, clip_percentile, q):
@@ -54,7 +54,9 @@ def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
             channel_subset1, channel_subset2):
   filenames = processing.get_filenames(file_pattern)
 
-  for filename in filenames:
+  for i, filename in enumerate(filenames):
+    if i % 1000 == 0:
+      logging.info('Processed %s files.', i)
     data = read_hdf5(filename)
     data = _process(data, low_freq, high_freq, dt, clip_percentile, q)
     data = _crop(data, raw_window, detect_window, event_duration, dt * q)
