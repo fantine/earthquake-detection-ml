@@ -56,8 +56,8 @@ start_channel = 14
 end_channel = 310
 
 batch = 1000
-minfreq = 1.0  # Hz
-maxfreq = 12.0  # Hz
+low_freq = 1.0  # Hz
+high_freq = 12.0  # Hz
 # we save time windows from event_time - window//2 to event_time + window//2
 raw_window_length = 60  # seconds
 passive_das_sampling = 50  # samples per second
