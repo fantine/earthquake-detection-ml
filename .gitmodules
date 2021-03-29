@@ -10,3 +10,6 @@
 [submodule "processing_utils"]
 	path = processing_utils
 	url = git@gitlab.com:fantine/processing-utils.git
+[submodule "cwt"]
+	path = cwt
+	url = git@gitlab.com:fantine/continuous-wavelet-transform.git
