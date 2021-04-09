@@ -47,6 +47,11 @@ def create_tf_example(inputs, labels):
   return tf.train.Example(features=tf.train.Features(feature=feature_dict))
 
 
+def clip_and_rescale(data, min_val, max_val):
+  data = np.clip(data, min_val, max_val)
+  return np.divide((data - min_val), (max_val - min_val))
+
+
 class DataLoader():
   def __init__(self, min_val, max_val):
     self.min_val = min_val
@@ -72,14 +77,23 @@ class DataLoader():
     # cwt_std = np.array([0.59016567, 2.09820685, 2.1491413], dtype=np.float32)
     # cwt_data = (cwt_data - cwt_mean) / cwt_std
     # Experimenting 3
-    raw_data = np.clip(raw_data, -0.01661, 0.01661) / 0.0041070296
-    cwt_max_clip = np.array(
-        [2.3137569396790534, 8.144198366144936, 8.144865672353834],
-        dtype=np.float32)
-    cwt_data = np.clip(cwt_data, None, cwt_max_clip)
-    cwt_mean = np.array([0.78003895, 2.28644534, 1.98756151], dtype=np.float32)
-    cwt_std = np.array([0.50673148, 1.67776902, 1.61192879], dtype=np.float32)
-    cwt_data = (cwt_data - cwt_mean) / cwt_std
+    # raw_data = np.clip(raw_data, -0.01661, 0.01661) / 0.0041070296
+    # cwt_max_clip = np.array(
+    #     [2.3137569396790534, 8.144198366144936, 8.144865672353834],
+    #     dtype=np.float32)
+    # cwt_data = np.clip(cwt_data, None, cwt_max_clip)
+    # cwt_mean = np.array([0.78003895, 2.28644534, 1.98756151], dtype=np.float32)
+    # cwt_std = np.array([0.50673148, 1.67776902, 1.61192879], dtype=np.float32)
+    # cwt_data = (cwt_data - cwt_mean) / cwt_std
+    # inputs = np.concatenate([np.expand_dims(raw_data, 2), cwt_data], axis=2)
+    # Experimenting 4
+    raw_data = clip_and_rescale(raw_data, -0.01661, 0.01661)
+    cwt_data[:, :, 0] = clip_and_rescale(
+        cwt_data[:, :, 0], 0., 2.3137569396790534)
+    cwt_data[:, :, 1] = clip_and_rescale(
+        cwt_data[:, :, 1], 0., 8.144198366144936)
+    cwt_data[:, :, 2] = clip_and_rescale(
+        cwt_data[:, :, 2], 0., 8.144865672353834)
     inputs = np.concatenate([np.expand_dims(raw_data, 2), cwt_data], axis=2)
     inputs = np.float32(inputs)
     return inputs, labels
