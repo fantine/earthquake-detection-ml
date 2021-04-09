@@ -67,7 +67,7 @@ class DataLoader():
     cwt_mean = np.array([0.79702355, 2.36154797, 2.0777858], dtype=np.float32)
     cwt_std = np.array([0.59016567, 2.09820685, 2.1491413], dtype=np.float32)
     cwt_data = (cwt_data - cwt_mean) / cwt_std
-    inputs = np.stack([raw_data, cwt_data], axis=2)
+    inputs = np.concatenate([raw_data, cwt_data], axis=2)
     # if self.min_val != 0.0 or self.max_val != 1.0:
     #   inputs = self._clip_and_rescale(inputs)
     return inputs, labels
