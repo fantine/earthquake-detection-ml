@@ -63,13 +63,25 @@ class DataLoader():
     filename = filename.replace('processed_data', 'processed_data_std')
     with h5py.File(filename, 'r') as f:
       cwt_data = f.get('cwt')[()]
-    raw_data /= 0.91538554  # global standard dev
-    cwt_mean = np.array([0.79702355, 2.36154797, 2.0777858], dtype=np.float32)
-    cwt_std = np.array([0.59016567, 2.09820685, 2.1491413], dtype=np.float32)
-    cwt_data = (cwt_data - cwt_mean) / cwt_std
-    inputs = np.concatenate([raw_data, cwt_data], axis=2)
+    # Experimenting 1
     # if self.min_val != 0.0 or self.max_val != 1.0:
     #   inputs = self._clip_and_rescale(inputs)
+    # Experimenting 2
+    # raw_data /= 0.91538554  # global standard dev
+    # cwt_mean = np.array([0.79702355, 2.36154797, 2.0777858], dtype=np.float32)
+    # cwt_std = np.array([0.59016567, 2.09820685, 2.1491413], dtype=np.float32)
+    # cwt_data = (cwt_data - cwt_mean) / cwt_std
+    # Experimenting 3
+    raw_data = np.clip(raw_data, -0.01661, 0.01661) / 0.0041070296
+    cwt_max_clip = np.array(
+        [2.3137569396790534, 8.144198366144936, 8.144865672353834],
+        dtype=np.float32)
+    cwt_data = np.clip(cwt_data, None, cwt_max_clip)
+    cwt_mean = np.array([0.78003895, 2.28644534, 1.98756151], dtype=np.float32)
+    cwt_std = np.array([0.50673148, 1.67776902, 1.61192879], dtype=np.float32)
+    cwt_data = (cwt_data - cwt_mean) / cwt_std
+    inputs = np.concatenate([raw_data, cwt_data], axis=2)
+    inputs = np.float32(inputs)
     return inputs, labels
 
 
