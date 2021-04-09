@@ -60,7 +60,7 @@ class DataLoader():
     with h5py.File(filename, 'r') as f:
       raw_data = f.get('input')[()]
       labels = f.get('label')[()]
-    filename.replace('processed_data', 'processed_data_std')
+    filename = filename.replace('processed_data', 'processed_data_std')
     with h5py.File(filename, 'r') as f:
       cwt_data = f.get('cwt')[()]
     raw_data /= 0.91538554  # global standard dev
