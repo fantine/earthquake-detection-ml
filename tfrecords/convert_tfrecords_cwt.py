@@ -80,7 +80,7 @@ class DataLoader():
     cwt_mean = np.array([0.78003895, 2.28644534, 1.98756151], dtype=np.float32)
     cwt_std = np.array([0.50673148, 1.67776902, 1.61192879], dtype=np.float32)
     cwt_data = (cwt_data - cwt_mean) / cwt_std
-    inputs = np.concatenate([raw_data, cwt_data], axis=2)
+    inputs = np.concatenate([np.expand_dims(raw_data, 2), cwt_data], axis=2)
     inputs = np.float32(inputs)
     return inputs, labels
 
