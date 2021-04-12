@@ -62,12 +62,14 @@ class DataLoader():
       labels = f.get('label')[()]
     # if self.min_val != 0.0 or self.max_val != 1.0:
     #   inputs = self._clip_and_rescale(inputs)
-      geophone_min_clip = np.array(
+      min_clip = np.array(
           [-0.81,  -4.38,  -2.24, -14.0, -12.4, -12.7], dtype=np.float32)
-      geophone_max_clip = np.array(
+      max_clip = np.array(
           [0.81,  4.38,  2.24, 14.0, 12.4, 12.7], dtype=np.float32)
-      inputs = np.clip(inputs, geophone_min_clip, geophone_max_clip)
-      inputs = np.divide(inputs, geophone_max_clip - geophone_min_clip)
+      min_clip = np.expand_dims(min_clip, axis=1)
+      max_clip = np.expand_dims(max_clip, axis=1)
+      inputs = np.clip(inputs, min_clip, max_clip)
+      inputs = np.divide(inputs, max_clip - min_clip)
     return inputs, labels
 
 
@@ -133,7 +135,7 @@ def convert_to_tfrecords(params):
     with tf.io.TFRecordWriter(tfrecord_file, options=options) as writer:
       for filename in file_shard:
         filename = filename.replace('das', 'geophone')
-        filename = filename.replace('_1.h5', '.5')
+        filename = filename.replace('_1.h5', '.h5')
         if os.path.isfile(filename):
           inputs, outputs = data_loader.read(filename)
           tf_example = create_tf_example(inputs, outputs)
