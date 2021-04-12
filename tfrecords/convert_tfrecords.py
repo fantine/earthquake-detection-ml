@@ -57,6 +57,7 @@ class DataLoader():
     return np.divide((data - self.min_val), (self.max_val - self.min_val))
 
   def read(self, filename):
+    filename = filename.replace('das', 'geophone')
     with h5py.File(filename, 'r') as f:
       inputs = f.get('input')[()]
       labels = f.get('label')[()]
