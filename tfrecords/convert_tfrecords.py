@@ -60,8 +60,14 @@ class DataLoader():
     with h5py.File(filename, 'r') as f:
       inputs = f.get('input')[()]
       labels = f.get('label')[()]
-    if self.min_val != 0.0 or self.max_val != 1.0:
-      inputs = self._clip_and_rescale(inputs)
+    # if self.min_val != 0.0 or self.max_val != 1.0:
+    #   inputs = self._clip_and_rescale(inputs)
+      geophone_min_clip = np.array(
+          [-0.81,  -4.38,  -2.24, -14.0, -12.4, -12.7], dtype=np.float32)
+      geophone_max_clip = np.array(
+          [0.81,  4.38,  2.24, 14.0, 12.4, 12.7], dtype=np.float32)
+      inputs = np.clip(inputs, geophone_min_clip, geophone_max_clip)
+      inputs = np.divide(inputs, geophone_max_clip - geophone_min_clip)
     return inputs, labels
 
 
