@@ -62,15 +62,16 @@ class DataLoader():
     return np.divide((data - self.min_val), (self.max_val - self.min_val))
 
   def read(self, filename):
-    with h5py.File(filename, 'r') as f:
-      raw_data = f.get('input')[()]
-      labels = f.get('label')[()]
+    # with h5py.File(filename, 'r') as f:
+    #   raw_data = f.get('input')[()]
+    #   labels = f.get('label')[()]
     filename = filename.replace('processed_data', 'processed_data_std')
     with h5py.File(filename, 'r') as f:
-      cwt_data = f.get('cwt')[()]
+      inputs = f.get('icwt')[()]
+      labels = f.get('label')[()]
     # Experimenting 1
-    # if self.min_val != 0.0 or self.max_val != 1.0:
-    #   inputs = self._clip_and_rescale(inputs)
+    if self.min_val != 0.0 or self.max_val != 1.0:
+      inputs = self._clip_and_rescale(inputs)
     # Experimenting 2
     # raw_data /= 0.91538554  # global standard dev
     # cwt_mean = np.array([0.79702355, 2.36154797, 2.0777858], dtype=np.float32)
@@ -87,14 +88,14 @@ class DataLoader():
     # cwt_data = (cwt_data - cwt_mean) / cwt_std
     # inputs = np.concatenate([np.expand_dims(raw_data, 2), cwt_data], axis=2)
     # Experimenting 4
-    raw_data = clip_and_rescale(raw_data, -0.01661, 0.01661)
-    cwt_data[:, :, 0] = clip_and_rescale(
-        cwt_data[:, :, 0], 0., 2.3137569396790534)
-    cwt_data[:, :, 1] = clip_and_rescale(
-        cwt_data[:, :, 1], 0., 8.144198366144936)
-    cwt_data[:, :, 2] = clip_and_rescale(
-        cwt_data[:, :, 2], 0., 8.144865672353834)
-    inputs = np.concatenate([np.expand_dims(raw_data, 2), cwt_data], axis=2)
+    # raw_data = clip_and_rescale(raw_data, -0.01661, 0.01661)
+    # cwt_data[:, :, 0] = clip_and_rescale(
+    #     cwt_data[:, :, 0], 0., 2.3137569396790534)
+    # cwt_data[:, :, 1] = clip_and_rescale(
+    #     cwt_data[:, :, 1], 0., 8.144198366144936)
+    # cwt_data[:, :, 2] = clip_and_rescale(
+    #     cwt_data[:, :, 2], 0., 8.144865672353834)
+    # inputs = np.concatenate([np.expand_dims(raw_data, 2), cwt_data], axis=2)
     inputs = np.float32(inputs)
     return inputs, labels
 
