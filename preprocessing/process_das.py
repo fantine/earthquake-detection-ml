@@ -65,6 +65,7 @@ def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
     os.makedirs(os.path.dirname(out_file), exist_ok=True)
     data1 = data[channel_subset1]
     data2 = data[channel_subset2]
+    data2 = data2[::-1]
     out_file1 = out_file.replace('.hdf5', '_1.h5')
     out_file2 = out_file.replace('.hdf5', '_2.h5')
     write_hdf5(out_file1, data1, label)
