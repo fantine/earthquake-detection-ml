@@ -1,5 +1,5 @@
-manifest_file: tfrecords/manifests/das_very_high_prob_balanced_eval_manifest.txt
-output_file_prefix: tfrecords/das_very_high_prob_balanced/eval
+manifest_file: tfrecords/manifests/st9-w20-c3-std_eval.txt
+output_file_prefix: tfrecords/st9-w20-c3-std/eval
 input_width: 288
 input_height: 695
 num_shards: 1
