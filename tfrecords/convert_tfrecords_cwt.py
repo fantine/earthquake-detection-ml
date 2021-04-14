@@ -68,6 +68,8 @@ class DataLoader():
     filename = filename.replace('processed_data', 'processed_data_std')
     with h5py.File(filename, 'r') as f:
       inputs = f.get('icwt')[()]
+      if '_2.h5' in filename:
+        inputs = inputs[::-1]
       labels = f.get('label')[()]
     # Experimenting 1
     if self.min_val != 0.0 or self.max_val != 1.0:
