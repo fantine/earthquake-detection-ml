@@ -25,11 +25,11 @@ def _parse_function(example_proto, mode, input_shape, label_shape,
     inputs2 = utils.random_crop(inputs2, input_shape)
 
   if mode == tf.estimator.ModeKeys.PREDICT:
-    return (inputs1, inputs2)
+    return {'model1': inputs1, 'model2': inputs2}
 
   labels = tf.io.decode_raw(parsed_example['labels'], tf.float32)
   labels = tf.reshape(labels, label_shape)
-  return (inputs1, inputs2), labels
+  return {'model1': inputs1, 'model2': inputs2}, labels
 
 
 def _get_dataset(
