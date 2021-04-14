@@ -164,9 +164,14 @@ def convert_to_tfrecords(params):
     logging.info('Writing %s', tfrecord_file)
     with tf.io.TFRecordWriter(tfrecord_file, options=options) as writer:
       for filename in file_shard:
-        inputs, outputs = data_loader.read(filename)
-        tf_example = create_tf_example(inputs, outputs)
-        writer.write(tf_example.SerializeToString())
+        filename = filename.replace('processed_data', 'processed_data_std')
+        with h5py.File(filename, 'r') as f:
+          if 'icwt' in f.keys():
+            inputs, outputs = data_loader.read(filename)
+            tf_example = create_tf_example(inputs, outputs)
+            writer.write(tf_example.SerializeToString())
+          else:
+            print('missing icwt')
 
 
 class ArgumentParser():
