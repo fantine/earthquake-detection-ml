@@ -75,8 +75,8 @@ def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
 def main():
   datatype = 'das'
   datapath = os.path.join(parameters.raw_datapath, datatype)
-  # file_pattern = os.path.join(datapath, '*/*/*')
-  file_pattern = os.path.join(datapath, 'event/00000/event_000*')
+  file_pattern = os.path.join(datapath, '*/*/*')
+  # file_pattern = os.path.join(datapath, 'event/00000/event_000*')
   process(
       file_pattern,
       in_dir=parameters.raw_datapath,
