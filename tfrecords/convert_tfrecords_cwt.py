@@ -68,6 +68,7 @@ class DataLoader():
     filename = filename.replace('processed_data', 'processed_data_std')
     with h5py.File(filename, 'r') as f:
       inputs = f.get('icwt')[()]
+      inputs = inputs.T
       if '_2.h5' in filename:
         inputs = inputs[::-1]
       labels = f.get('label')[()]
