@@ -65,7 +65,7 @@ class DataLoader():
     # with h5py.File(filename, 'r') as f:
     #   raw_data = f.get('input')[()]
     #   labels = f.get('label')[()]
-    filename = filename.replace('processed_data', 'processed_data_std')
+    # filename = filename.replace('processed_data', 'processed_data_std')
     with h5py.File(filename, 'r') as f:
       inputs = f.get('icwt')[()]
       inputs = inputs.T
