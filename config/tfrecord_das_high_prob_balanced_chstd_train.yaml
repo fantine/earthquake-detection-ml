@@ -1,8 +1,0 @@
-manifest_file: tfrecords/manifests/das_high_prob_balanced_chstd_train_manifest.txt
-output_file_prefix: tfrecords/das_high_prob_balanced_chstd/train
-input_width: 288
-input_height: 695
-num_shards: 12
-min_val: -0.01723
-max_val: 0.01723
-# 2nd and 98th percentile of the dataset

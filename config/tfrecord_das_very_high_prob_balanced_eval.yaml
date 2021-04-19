@@ -1,8 +1,0 @@
-manifest_file: tfrecords/manifests/st9-w20-c3-std_eval.txt
-output_file_prefix: tfrecords/st9-w20-c3-std/eval
-input_width: 288
-input_height: 695
-num_shards: 1
-min_val: -0.10575
-max_val: 0.10575
-# 2nd and 98th percentile of the dataset
