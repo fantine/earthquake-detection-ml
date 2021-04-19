@@ -21,7 +21,7 @@ file.
 ## Create TensorFlow records
 Convert the data files into TFRecord files with the following command:
 ```bash
-python -m preprocessing.convert_tfrecords -c config/tfrecord_config_train.yaml
+python -m tfrecords.convert_tfrecords -c config/tfrecord_config_train.yaml
 ```
 
 The `-c` flag specifies a configuration file.
