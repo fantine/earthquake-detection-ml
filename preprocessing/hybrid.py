@@ -27,7 +27,8 @@ def create_model1(input_shape, hparams):
       hparams.filter_increase_mode,
   )
 
-  model = keras.Sequential([keras.layers.Input(input_shape)])
+  model = keras.Sequential(name='model1')
+  model.add(keras.layers.Input(input_shape))
   for filters in layer_filters:
     model.add(keras.layers.Conv1D(
         filters, 3, padding='same'))
@@ -70,7 +71,8 @@ def create_model2(input_shape, hparams):
       hparams.num_filters,
       hparams.filter_increase_mode,
   )
-  model = keras.Sequential([keras.layers.Input(input_shape)])
+  model = keras.Sequential(name='model2')
+  model.add(keras.layers.Input(input_shape))
   for filters in layer_filters:
     model.add(keras.layers.Conv2D(filters, 3, padding='same'))
     if hparams.batchnorm == 1:

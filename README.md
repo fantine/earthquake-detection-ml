@@ -5,54 +5,48 @@
 ## Getting started
 
 ### Update the submodules
-After cloning the repository, make sure to run the following commands to 
+After cloning the repository, run the following commands to initialize and
 update the submodules.
 
-```
+```bash
 git submodule init
 git submodule update
 ```
 
-`git submodule foreach git pull origin master`
-
 ### Requirements
 
-- TensorFlow
+You can run the project from an interactive bash session within the provided
+[Docker](https://www.docker.com]) container:
+```bash
+docker run --gpus all -it fantine/ml_framework:latest bash
+```
+If you do not have root permissions to run Docker, [Singularity](https://singularity.lbl.gov) might be a good alternative for you. Refer to 
+`containers/README.md` for more details.
+
 
 ## Folder structure
 
-- **bin:** Scripts to run jobs.
+- **bin:** Scripts to run machine learning jobs.
 - **config:** Configuration files. 
-- **log**: Log files.
-- **trainer**: Machine learning model trainer.
+- **containers:** Details on how to use containers for this project. 
+- **docs:** Documentation.
+- **log:** Directory for log files.
+- **ml_framework:** Machine learning framework.
+- **plot_utils:** Utility functions for making figures.
+- **preprocessing:** All the data preprocessing steps.
+- **processing_utils:** Processing utility functions.
+- **tfrecords:** Utility functions for converting files to TFRecords.
 
-## Train a machine learning (ML) model
+## Set the datapath for the project
+
+Set the `DATAPATH` variable inside `config/datapath.sh` to the data or scratch directory
+to which you want write data files.
+
+## Create and run a machine learning model
 
 This repository provides a parameterized, modular framework for creating and
-running ML jobs.
+running ML models.
 
-### Run a job
-To train a machine learning model, use the following command:
-```
-bin/train.sh model_config dataset
-```
-
-- `model_config`: Name of ML model configuration to use. This should correspond 
-to a configuration file named `config/model_config.sh`.
-- `dataset`: Dataset identifier. Check the variables `datapath`, `train_file`,
-and `eval_file` in `bin/train.sh` to ensure that this maps to the correct input
- data.
-- `label`: Optional label to add to the job name.
-
-### Set parameters for a job
-Parameters for an ML job can be set by creating a corresponding configuration
-file: `config/your_model_config.sh`. 
-
-### Create a new ML model architecture
-- Create a new `your_model.py` file inside the `trainer/model` folder. Look at
-other models inside the folder for examples.
-- Reference your new model in `trainer/model/__init__.py`.
-- Set the `model` argument to your new model's name in your model configuration
-file `config/your_model_config.sh`.
-
-
+- [Convert input data to TensorFlow records](docs/convert_tfrecords.md)
+- [Machine learning training and inference](docs/ml_framework.md)
+- [Hyperparameter tuning](docs/hptuning.md)
