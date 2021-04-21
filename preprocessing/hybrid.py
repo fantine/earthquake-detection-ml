@@ -15,7 +15,7 @@ class HybridCNN(base.ClassificationModel):
     model1 = create_model1((input_shape[1], 6), hparams)
     model2 = create_model2(input_shape, hparams)
     # combine the output of the two models
-    combined = keras.concatenate([model1.output, model2.output])
+    combined = keras.layers.concatenate([model1.output, model2.output])
     output = keras.layers.Dense(hparams.out_channels)(combined)
     return keras.Model(inputs=[model1.input, model2.input], outputs=output)
 

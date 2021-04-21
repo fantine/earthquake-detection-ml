@@ -77,7 +77,7 @@ class DataLoader():
     geo_clip = np.expand_dims(geo_clip, axis=1)
     geo_std = np.array([1.5769932,  2.2115157,  1.618729, 11.568308, 10.987169,
                         12.1504755], dtype=np.float32)
-    geo_clip = np.expand_dims(geo_std, axis=1)
+    geo_std = np.expand_dims(geo_std, axis=1)
     geo_data = np.clip(geo_data, -geo_clip, geo_clip) / geo_std
     return (das_data, geo_data), labels
 
