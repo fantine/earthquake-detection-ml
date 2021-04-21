@@ -55,6 +55,10 @@ class DataLoader():
     with h5py.File(filename, 'r') as f:
       inputs = f.get('input')[()]
       labels = f.get('label')[()]
+ #   inputs = np.clip(inputs, -0.1, 0.1) / 0.03 # 2nd
+ #   inputs = np.clip(inputs, -0.04, 0.04) / 0.018799046 # 5th
+ #   inputs = np.clip(inputs, -0.024, 0.024) / 0.014088576 #10th
+ #   inputs = np.clip(inputs, -0.012, 0.012) / 0.008918234 #20th
     if self.min_val != 0.0 or self.max_val != 1.0:
       inputs = self._clip_and_rescale(inputs)
     return inputs, labels
