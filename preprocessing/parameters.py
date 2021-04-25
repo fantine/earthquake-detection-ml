@@ -9,8 +9,8 @@ from config import get_datapath
 
 # ---- catalog parameters -----------------------------------------------------
 num_noise_examples = 30000
-event_catalog = 'data/event_catalog.h5'
-noise_catalog = 'data/noise_catalog.h5'
+event_catalog = 'catalog/earthquake_catalog.h5'
+noise_catalog = 'catalog/noise_catalog.h5'
 
 # ---- datapath ---------------------------------------------------------------
 datapath = get_datapath.get_datapath()
