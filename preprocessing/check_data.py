@@ -13,7 +13,7 @@ def check_data(catalog, file_pattern, key):
   filenames = processing.get_filenames(file_pattern)
   regex_pattern = r'[a-z]+_(\d+)'
   for filename in filenames:
-    index = int(re.match(regex_pattern, os.path.basename(filename).group(1)))
+    index = int(re.match(regex_pattern, os.path.basename(filename)).group(1))
     df.at[index, key] = True
   df.to_hdf(catalog, key='df', mode='w')
 
