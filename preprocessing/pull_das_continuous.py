@@ -6,7 +6,7 @@ import h5py
 import numpy as np
 
 from das_reader.reader import Reader
-from earthquakes import parameters
+from preprocessing import parameters
 from processing_utils import processing_utils as processing
 
 
