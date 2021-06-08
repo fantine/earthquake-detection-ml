@@ -37,7 +37,7 @@ closest_station = 'JSFB'
 reference_channel = 'EHZ'
 
 network = 'NC'
-stations = 'JSFB,'
+stations = 'JSFB'  # JRSC
 channels = '*'
 location = '*'
 
@@ -59,7 +59,11 @@ detect_window_length = 20.48
 event_duration = 12
 das_dt = 0.02
 das_downsampling_factor = 2
-geophone_dt = 0.01
-geophone_downsampling_factor = 4
+seismometer_dt = 0.01
+seismometer_downsampling_factor = 4
 channel_subset1 = list(range(13, 301))
 channel_subset2 = list(range(328, 616))
+
+continuous_window = 24 * 60 * 60
+continuous_starttime = datetime.datetime(2017, 5, 10)
+continuous_endtime = datetime.datetime(2005, 5, 11)
