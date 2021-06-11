@@ -11,6 +11,7 @@ from typing import List, Text
 import h5py
 import numpy as np
 import pandas as pd
+from obspy import UTCDateTime
 from obspy.clients.fdsn import Client
 
 from preprocessing import parameters
@@ -95,7 +96,7 @@ class WaveformDownloader():
     os.makedirs(datapath, exist_ok=True)
     logging.info('Writing waveforms to %s', datapath)
 
-    starttimes = [starttime, ]
+    starttimes = [UTCDateTime(starttime), ]
     while starttimes[-1] < endtime:
       starttimes.append(starttimes[-1] + dt.timedelta(seconds=window))
     filenames = []
