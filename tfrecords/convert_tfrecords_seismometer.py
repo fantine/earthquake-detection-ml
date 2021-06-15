@@ -58,19 +58,28 @@ class DataLoader():
 
   def read(self, filename):
     with h5py.File(filename, 'r') as f:
-      inputs = f.get('input')[()]
+      data = f.get('input')[()]
       labels = f.get('label')[()]
     # if self.min_val != 0.0 or self.max_val != 1.0:
     #   inputs = self._clip_and_rescale(inputs)
-      min_clip = np.array(
-          [-0.81,  -4.38,  -2.24, -14.0, -12.4, -12.7], dtype=np.float32)
-      max_clip = np.array(
-          [0.81,  4.38,  2.24, 14.0, 12.4, 12.7], dtype=np.float32)
-      min_clip = np.expand_dims(min_clip, axis=1)
-      max_clip = np.expand_dims(max_clip, axis=1)
-      inputs = np.clip(inputs, min_clip, max_clip)
-      inputs = np.divide(inputs, max_clip - min_clip)
-    return inputs, labels
+      # min_clip = np.array(
+      #     [-0.81,  -4.38,  -2.24, -14.0, -12.4, -12.7], dtype=np.float32)
+      # max_clip = np.array(
+      #     [0.81,  4.38,  2.24, 14.0, 12.4, 12.7], dtype=np.float32)
+      # min_clip = np.expand_dims(min_clip, axis=1)
+      # max_clip = np.expand_dims(max_clip, axis=1)
+      # inputs = np.clip(inputs, min_clip, max_clip)
+      # inputs = np.divide(inputs, max_clip - min_clip)
+    clip_values = np.array([6.0, 7.5, 5.6, 38.0, 37.0, 42.0], dtype=np.float32)
+    clip_values = np.expand_dims(clip_values, axis=1)
+    std_values = np.array(
+        [1.5769932,  2.2115157,  1.618729, 11.568308, 10.987169, 12.1504755],
+        dtype=np.float32
+    )
+    std_values = np.expand_dims(std_values, axis=1)
+    data = np.clip(data, -clip_values, clip_values) / std_values
+    data = data.T
+    return data, labels
 
 
 def _get_file_suffix(compression_type):
