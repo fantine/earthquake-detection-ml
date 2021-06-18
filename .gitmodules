@@ -13,3 +13,6 @@
 [submodule "cwt"]
 	path = cwt
 	url = git@gitlab.com:fantine/continuous-wavelet-transform.git
+[submodule "containers"]
+	path = containers
+	url = git@gitlab.com:fantine/containers
