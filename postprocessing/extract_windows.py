@@ -21,8 +21,8 @@ def extract_windows(df, in_path, out_path, window_length, dt):
     with h5py.File(filename, 'r') as f:
       data = f.get('data')[()]
       timesample = (timestamp - starttime).total_seconds() // dt
-      startsample = timesample - window_length // (2 * dt)
-      endsample = timesample + window_length // (2 * dt)
+      startsample = int(timesample - window_length // (2 * dt))
+      endsample = int(timesample + window_length // (2 * dt))
       out_file = os.path.join(out_path, 'fp_{:05d}.h5'.format(i))
       write(out_file, data[:, startsample:endsample])
 
