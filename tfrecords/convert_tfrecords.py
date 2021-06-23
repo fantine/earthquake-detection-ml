@@ -59,8 +59,15 @@ class DataLoader():
  #   inputs = np.clip(inputs, -0.04, 0.04) / 0.018799046 # 5th
  #   inputs = np.clip(inputs, -0.024, 0.024) / 0.014088576 #10th
  #   inputs = np.clip(inputs, -0.012, 0.012) / 0.008918234 #20th
-    if self.min_val != 0.0 or self.max_val != 1.0:
-      inputs = self._clip_and_rescale(inputs)
+    clip_value, std_value = 3.345483024120213, 0.38727078  # 99th
+    clip_value, std_value = 0.6407874476909647, 0.10301719  # 98th
+    clip_value, std_value = 0.10290959551930445, 0.031106085  # 95th
+    clip_value, std_value = 0.047470349818468094, 0.020619705  # 90th
+
+    inputs = np.clip(inputs, -clip_value, clip_value) / std_value
+    inputs = np.float32(inputs)
+    # if self.min_val != 0.0 or self.max_val != 1.0:
+    #   inputs = self._clip_and_rescale(inputs)
     return inputs, labels
 
 
