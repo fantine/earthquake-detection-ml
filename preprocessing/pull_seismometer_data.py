@@ -173,7 +173,8 @@ def _get_waveform(
     st = client.get_waveforms(
         network=network, station=stations, channel=channels,
         location=location, starttime=starttime, endtime=endtime)
-  except:
+  except Exception as e:
+    print(e)
     st = None
 
   if st is not None:
