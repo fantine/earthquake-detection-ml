@@ -59,10 +59,12 @@ class DataLoader():
  #   inputs = np.clip(inputs, -0.04, 0.04) / 0.018799046 # 5th
  #   inputs = np.clip(inputs, -0.024, 0.024) / 0.014088576 #10th
  #   inputs = np.clip(inputs, -0.012, 0.012) / 0.008918234 #20th
-    clip_value, std_value = 3.345483024120213, 0.38727078  # 99th
-    clip_value, std_value = 0.6407874476909647, 0.10301719  # 98th
-    clip_value, std_value = 0.10290959551930445, 0.031106085  # 95th
-    clip_value, std_value = 0.047470349818468094, 0.020619705  # 90th
+    clip_value, std_value = 0.29420450955629374, 0.044633526  # 99th
+    clip_value, std_value = 0.15883579850196838, 0.034195222  # 98th
+    clip_value, std_value = 0.11209917262196534, 0.029403143  # 97th
+    clip_value, std_value = 0.08798494815826419, 0.02643562  # 96th
+    clip_value, std_value = 0.07310335338115692, 0.024334457  # 95th
+    clip_value, std_value = 0.041593365371227264, 0.01865723  # 90th
 
     inputs = np.clip(inputs, -clip_value, clip_value) / std_value
     inputs = np.float32(inputs)
