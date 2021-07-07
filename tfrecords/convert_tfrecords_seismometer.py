@@ -70,14 +70,31 @@ class DataLoader():
       # max_clip = np.expand_dims(max_clip, axis=1)
       # inputs = np.clip(inputs, min_clip, max_clip)
       # inputs = np.divide(inputs, max_clip - min_clip)
-    clip_values = np.array([6.0, 7.5, 5.6, 38.0, 37.0, 42.0], dtype=np.float32)
+    # clip_values = np.array([6.0, 7.5, 5.6, 38.0, 37.0, 42.0], dtype=np.float32)
+    # std_values = np.array(
+    #     [1.5769932,  2.2115157,  1.618729, 11.568308, 10.987169, 12.1504755],
+    #     dtype=np.float32
+    # )
+
+    # 99.5th
+    clip_values = np.array([38.73090591,  33.27859217,  29.42056465, 204.55128136,
+                            192.66809975, 207.06877602], dtype=np.float32)
+    std_values = np.array([3.79600604,  3.61591117,  3.02815053, 21.11769033, 19.97995761,
+                           21.58822516], dtype=np.float32)
+    # 99th
+    clip_values = np.array([19.12533085,  16.99479103,  14.8097368, 100.73499916,
+                            97.68273155, 106.57915833], dtype=np.float32)
+    std_values = np.array([2.60649068,  2.75844068,  2.20224507, 15.27593551, 14.63964137,
+                           15.97061868], dtype=np.float32)
+    # 98th
+    clip_values = np.array([9.29433527,  9.75987179,  7.43926465, 50.09132858, 48.78753105,
+                            54.2594487], dtype=np.float32)
+    std_values = np.array([1.75401556,  2.2324876,  1.63497632, 11.47794848, 10.901093,
+                           11.95739858], dtype=np.float32)
     clip_values = np.expand_dims(clip_values, axis=1)
-    std_values = np.array(
-        [1.5769932,  2.2115157,  1.618729, 11.568308, 10.987169, 12.1504755],
-        dtype=np.float32
-    )
     std_values = np.expand_dims(std_values, axis=1)
     data = np.clip(data, -clip_values, clip_values) / std_values
+    data = np.float32(data)
     data = data.T
     return data, labels
 
