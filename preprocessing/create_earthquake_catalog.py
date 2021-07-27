@@ -180,7 +180,7 @@ class EventCatalogBuilder():
     logging.info('Found %s events.', len(self.catalog))
 
 
-def _split_into_time_windows(starttime, endtime):
+def _split_into_time_windows(starttime, endtime, interval=6 * 30):
   """Splits the time window defined by starttime and endtime into 6-month time
   windows.
 
@@ -201,18 +201,12 @@ def _split_into_time_windows(starttime, endtime):
 
   windows = []
   window_starttime = starttime
-  num_months = _total_months(window_starttime, endtime)
-  while num_months > 6:
-    if window_starttime.month < 7:
-      window_endtime = dt.datetime(
-          year=window_starttime.year, month=7, day=1)
-    else:
-      window_endtime = dt.datetime(
-          year=(window_starttime.year + 1), month=1, day=1)
+  num_days = (endtime - window_starttime).days
+  while num_days > interval:
+    window_endtime = window_starttime + dt.timedelta(days=interval)
     windows.append((window_starttime, window_endtime))
     window_starttime = window_endtime
-    num_months = _total_months(window_starttime, endtime)
-
+    num_days = (endtime - window_starttime).days
   windows.append((window_starttime, endtime))
   return windows
 
