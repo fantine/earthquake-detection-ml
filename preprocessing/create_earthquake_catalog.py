@@ -10,7 +10,7 @@ import pandas as pd
 from scipy.optimize import curve_fit
 
 # from seismic_utils import llhxyz
-from earthquakes import parameters
+from preprocessing import parameters
 
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
@@ -258,7 +258,7 @@ def main():
       maxradius=parameters.max_radius)
 
   logging.info('Saving catalog to file: %s', parameters.event_catalog)
-  catalog_builder.catalog.to_pickle(parameters.event_catalog)
+  catalog_builder.catalog.to_hdf(parameters.event_catalog, key='df')
 
 
 if __name__ == '__main__':
