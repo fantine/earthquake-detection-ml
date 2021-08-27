@@ -43,20 +43,20 @@ def write_hdf5(out_file, data, label=None):
 
 def read_hdf5(filename):
   channels = []
- # f = h5py.File(filename, 'a')
- # f.close()
+  n_samples = 8640000
+  keys = ['JRSC.HNE', 'JRSC.HNN', 'JRSC.HNZ',
+          'JSFB.HNE', 'JSFB.HNN', 'JSFB.HNZ']
   with h5py.File(filename, 'r') as f:
-    if len(f.keys()) == 6:
-      channels.append(f.get('JRSC.HNE')[()])
-      channels.append(f.get('JRSC.HNN')[()])
-      channels.append(f.get('JRSC.HNZ')[()])
-      channels.append(f.get('JSFB.HNE')[()])
-      channels.append(f.get('JSFB.HNN')[()])
-      channels.append(f.get('JSFB.HNZ')[()])
-      try:
-        return np.stack(channels, axis=0)
-      except:
-        return None
+    for key in keys:
+      channel = np.zeros((n_samples,), dtype=np.float32)
+      if key in f.keys():
+        tmp = _process(
+            f.get(key)[()], parameters.low_freq, parameters.high_freq,
+            parameters.seismometer_dt,
+            parameters.seismometer_downsampling_factor)
+        channel[:tmp.shape[0]] = tmp
+      channels.append(channel)
+    return np.stack(channels, axis=0)
   return None
 
 
@@ -87,19 +87,19 @@ def process_continuous(file_pattern, in_dir, out_dir, raw_window, low_freq,
     if i % 1000 == 0:
       logging.info('Processed %s files.', i)
     out_file = filename.replace(in_dir, out_dir)
-    if  not os.path.exists(out_file):
+    if not os.path.exists(out_file):
       data = read_hdf5(filename)
-      if data is not None and data.shape[1] == 8640000:
-        data = _process(data, low_freq, high_freq, dt, q)
-     # clip_values = np.array([ 31.26569397,  26.99611814,  24.20824539, 166.83790821, 156.57493343, 170.47219654], dtype=np.float32)
-     # clip_values = np.expand_dims(clip_values, axis=1)
-     # std_values = np.array(
-     #     [ 4.199149 ,  3.9638348,  3.3899522, 23.58608  , 22.261927 ,
-     #  24.283094 ],
-     #     dtype=np.float32
-     # )
-     # std_values = np.expand_dims(std_values, axis=1)
-     # data = np.clip(data, -clip_values, clip_values) / std_values
+      if data is not None:
+        # data = _process(data, low_freq, high_freq, dt, q)
+       # clip_values = np.array([ 31.26569397,  26.99611814,  24.20824539, 166.83790821, 156.57493343, 170.47219654], dtype=np.float32)
+       # clip_values = np.expand_dims(clip_values, axis=1)
+       # std_values = np.array(
+       #     [ 4.199149 ,  3.9638348,  3.3899522, 23.58608  , 22.261927 ,
+       #  24.283094 ],
+       #     dtype=np.float32
+       # )
+       # std_values = np.expand_dims(std_values, axis=1)
+       # data = np.clip(data, -clip_values, clip_values) / std_values
         data = data.T
      # out_file = filename.replace(in_dir, out_dir)
         os.makedirs(os.path.dirname(out_file), exist_ok=True)
@@ -123,7 +123,6 @@ def main():
   #     q=parameters.seismometer_downsampling_factor,
   # )
   file_pattern = os.path.join(datapath, 'continuous/*')
-  print(file_pattern)
   process_continuous(
       file_pattern,
       in_dir=parameters.raw_datapath,
