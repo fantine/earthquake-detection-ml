@@ -43,15 +43,20 @@ def write_hdf5(out_file, data, label=None):
 
 def read_hdf5(filename):
   channels = []
+ # f = h5py.File(filename, 'a')
+ # f.close()
   with h5py.File(filename, 'r') as f:
     if len(f.keys()) == 6:
-      channels.append(f.get('JRSC_HNE')[()])
-      channels.append(f.get('JRSC_HNN')[()])
-      channels.append(f.get('JRSC_HNZ')[()])
-      channels.append(f.get('JSFB_HNE')[()])
-      channels.append(f.get('JSFB_HNN')[()])
-      channels.append(f.get('JSFB_HNZ')[()])
-      return np.stack(channels, axis=0)
+      channels.append(f.get('JRSC.HNE')[()])
+      channels.append(f.get('JRSC.HNN')[()])
+      channels.append(f.get('JRSC.HNZ')[()])
+      channels.append(f.get('JSFB.HNE')[()])
+      channels.append(f.get('JSFB.HNN')[()])
+      channels.append(f.get('JSFB.HNZ')[()])
+      try:
+        return np.stack(channels, axis=0)
+      except:
+        return None
   return None
 
 
@@ -81,22 +86,24 @@ def process_continuous(file_pattern, in_dir, out_dir, raw_window, low_freq,
   for i, filename in enumerate(filenames):
     if i % 1000 == 0:
       logging.info('Processed %s files.', i)
-    data = read_hdf5(filename)
-    if data is not None and data.shape[1] == (raw_window // dt):
-      data = _process(data, low_freq, high_freq, dt, q)
-      clip_values = np.array(
-          [6.0, 7.5, 5.6, 38.0, 37.0, 42.0], dtype=np.float32)
-      clip_values = np.expand_dims(clip_values, axis=1)
-      std_values = np.array(
-          [1.5769932,  2.2115157,  1.618729, 11.568308, 10.987169, 12.1504755],
-          dtype=np.float32
-      )
-      std_values = np.expand_dims(std_values, axis=1)
-      data = np.clip(data, -clip_values, clip_values) / std_values
-      data = data.T
     out_file = filename.replace(in_dir, out_dir)
-    os.makedirs(os.path.dirname(out_file), exist_ok=True)
-    write_hdf5(out_file, data)
+    if  not os.path.exists(out_file):
+      data = read_hdf5(filename)
+      if data is not None and data.shape[1] == 8640000:
+        data = _process(data, low_freq, high_freq, dt, q)
+     # clip_values = np.array([ 31.26569397,  26.99611814,  24.20824539, 166.83790821, 156.57493343, 170.47219654], dtype=np.float32)
+     # clip_values = np.expand_dims(clip_values, axis=1)
+     # std_values = np.array(
+     #     [ 4.199149 ,  3.9638348,  3.3899522, 23.58608  , 22.261927 ,
+     #  24.283094 ],
+     #     dtype=np.float32
+     # )
+     # std_values = np.expand_dims(std_values, axis=1)
+     # data = np.clip(data, -clip_values, clip_values) / std_values
+        data = data.T
+     # out_file = filename.replace(in_dir, out_dir)
+        os.makedirs(os.path.dirname(out_file), exist_ok=True)
+        write_hdf5(out_file, data)
 
 
 def main():
@@ -116,6 +123,7 @@ def main():
   #     q=parameters.seismometer_downsampling_factor,
   # )
   file_pattern = os.path.join(datapath, 'continuous/*')
+  print(file_pattern)
   process_continuous(
       file_pattern,
       in_dir=parameters.raw_datapath,
