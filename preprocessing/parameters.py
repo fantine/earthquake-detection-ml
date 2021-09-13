@@ -38,7 +38,7 @@ reference_channel = 'EHZ'
 
 #network = 'NC'
 network = 'BK'
-#stations = 'JSFB'
+#stations = ['JSFB']
 stations = ['JRSC']
 channels = ['HNE', 'HNN', 'HNZ']
 location = '*'
@@ -68,7 +68,7 @@ channel_subset1 = list(range(13, 301))
 channel_subset2 = list(range(328, 616))
 
 continuous_window = 24 * 60 * 60
-continuous_starttime = datetime.datetime(2017, 5, 10)
-continuous_endtime = datetime.datetime(2005, 5, 11)
+continuous_starttime = datetime.datetime(2016, 9, 2)
+continuous_endtime = datetime.datetime(2019, 12, 10)
 
 n_threads = 8
