@@ -187,6 +187,7 @@ def _get_waveform(
       if dataset_name not in f.keys():
         waveform = np.asarray(tr, dtype=np.float32)
         f.create_dataset(dataset_name, data=waveform)
+    f.close()
   else:
     logging.warning('Could not download data for %s.',
                     os.path.basename(filename))
