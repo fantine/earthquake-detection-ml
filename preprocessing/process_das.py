@@ -13,13 +13,11 @@ from preprocessing import parameters
 logging.basicConfig(level=logging.INFO)
 
 
-def _process(data, low_freq, high_freq, dt, clip_percentile, q):
+def _process(data, low_freq, high_freq, dt, q):
   data = processing.get_strain_rate(data)
   data = processing.remove_median(data)
-  # data = processing.clip(data, clip_percentile)
   data = processing.bandpass(data, low_freq, high_freq, dt)
   data = processing.decimate(data, q)
-  # data = processing.normalize(data)
   return data
 
 
@@ -50,7 +48,7 @@ def read_hdf5(filename):
 
 
 def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
-            event_duration, low_freq, high_freq, dt, clip_percentile, q,
+            event_duration, low_freq, high_freq, dt, q,
             channel_subset1, channel_subset2):
   filenames = processing.get_filenames(file_pattern)
 
@@ -58,7 +56,7 @@ def process(file_pattern, in_dir, out_dir, raw_window, detect_window,
     if i % 1000 == 0:
       logging.info('Processed %s files.', i)
     data = read_hdf5(filename)
-    data = _process(data, low_freq, high_freq, dt, clip_percentile, q)
+    data = _process(data, low_freq, high_freq, dt, q)
     data = _crop(data, raw_window, detect_window, event_duration, dt * q)
     label = _get_label(filename)
     out_file = filename.replace(in_dir, out_dir)
@@ -86,7 +84,7 @@ def main():
       low_freq=parameters.low_freq,
       high_freq=parameters.high_freq,
       dt=parameters.das_dt,
-      clip_percentile=parameters.clip_percentile,
+      # clip_percentile=parameters.clip_percentile,
       q=parameters.das_downsampling_factor,
       channel_subset1=parameters.channel_subset1,
       channel_subset2=parameters.channel_subset2

@@ -1,7 +1,8 @@
-"""Create seismic event catalog using the Obspy client."""
+"""Creates seismic event catalog using the Obspy client."""
 import datetime as dt
 import logging
 import re
+from typing import Text, Tuple
 
 import numpy as np
 from obspy.clients.fdsn import Client
@@ -9,7 +10,6 @@ from obspy.geodetics.base import gps2dist_azimuth
 import pandas as pd
 from scipy.optimize import curve_fit
 
-# from seismic_utils import llhxyz
 from preprocessing import parameters
 
 
@@ -19,16 +19,21 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 class EventCatalogBuilder():
   """Class for creating a catalog of local seismic events."""
 
-  def __init__(self, clientcode, reference_coordinates, reference_station,
-               reference_channel):
+  def __init__(
+      self,
+      clientcode: Text,
+      reference_coordinates: Tuple[float, float, float],
+      reference_station: Text,
+      reference_channel: Text,
+  ):
     """Initialization.
 
     Args:
-        clientcode (string): Obspy client code.
-        reference_coordinates (float triplet): (longitude, latitude, altitude)
+        clientcode: Obspy client code.
+        reference_coordinates: (longitude, latitude, altitude)
             coordinates to be used for the radius search.
-        reference_station (str): reference station code.
-        reference_channel (str): reference channel code.
+        reference_station: reference station code.
+        reference_channel: reference channel code.
     """
     self.client = Client(clientcode)
     self.catalog = pd.DataFrame(
@@ -40,7 +45,6 @@ class EventCatalogBuilder():
                  'onset', 'evaluation_mode', 'evaluation_status',
                  ])
     self.reference_coordinates = reference_coordinates
-    # self.reference_xyz = llhxyz.llh2xyz(*reference_llh)
     self.station = reference_station
     self.channel = reference_channel
 
@@ -74,7 +78,6 @@ class EventCatalogBuilder():
     """
     for event in obspy_catalog:
       origin = event.preferred_origin()
-      # origin_coordinates = (origin.latitude, origin.longitude, -origin.depth)
       pick = self._get_preferred_pick(event)
       self.catalog = self.catalog.append(
           {
@@ -211,11 +214,6 @@ def _split_into_time_windows(starttime, endtime, interval=6 * 30):
   return windows
 
 
-def _total_months(start, end):
-  """Computes number of months between start and end."""
-  return (end.year - start.year) * 12 + (end.month - start.month)
-
-
 def _get_id(event):
   """Wrapper to parse event id."""
   resource_id = str(event.resource_id)
@@ -233,8 +231,7 @@ def _get_magnitude(event):
 
 
 def _get_velocity(distance, focal_time, arrival_time):
-  """Compute velocity from the available recorded arrival times at the
-  neighboring station."""
+  """Computes travel velocity from the available recorded arrival times."""
   if arrival_time is not None:
     time_lag = (arrival_time - focal_time).total_seconds()
     return distance / time_lag
@@ -242,20 +239,23 @@ def _get_velocity(distance, focal_time, arrival_time):
 
 
 def main():
-  """Create a catalog of seismic events close to Stanford."""
+  """Creates a catalog of seismic events close to Stanford."""
   logging.info('Creating seismic event catalog...')
   catalog_builder = EventCatalogBuilder(
       clientcode=parameters.clientcode,
-      reference_coordinates=(parameters.stanford_latitude,
-                             parameters.stanford_longitude,
-                             parameters.stanford_elevation),
+      reference_coordinates=(
+          parameters.stanford_latitude,
+          parameters.stanford_longitude,
+          parameters.stanford_elevation
+      ),
       reference_station=parameters.closest_station,
-      reference_channel=parameters.reference_channel)
-
+      reference_channel=parameters.reference_channel
+  )
   catalog_builder.create_event_catalog(
       starttime=parameters.starttime,
       endtime=parameters.endtime,
-      maxradius=parameters.max_radius)
+      maxradius=parameters.max_radius
+  )
 
   logging.info('Saving catalog to file: %s', parameters.event_catalog)
   catalog_builder.catalog.to_hdf(parameters.event_catalog, key='df')

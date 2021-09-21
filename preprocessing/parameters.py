@@ -36,9 +36,9 @@ stanford_elevation = 29.0  # meters
 closest_station = 'JSFB'
 reference_channel = 'EHZ'
 
-#network = 'NC'
+# network = 'NC'
 network = 'BK'
-#stations = ['JSFB']
+# stations = ['JSFB']
 stations = ['JRSC']
 channels = ['HNE', 'HNN', 'HNZ']
 location = '*'
