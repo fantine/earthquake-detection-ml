@@ -32,7 +32,6 @@ If you do not have root permissions to run Docker, [Singularity](https://singula
 - **docs:** Documentation.
 - **log:** Directory for log files.
 - **ml_framework:** Machine learning framework.
-- **plot_utils:** Utility functions for making figures.
 - **preprocessing:** All the data preprocessing steps.
 - **processing_utils:** Processing utility functions.
 - **tfrecords:** Utility functions for converting files to TFRecords.
