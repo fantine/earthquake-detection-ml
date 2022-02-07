@@ -27,14 +27,17 @@ If you do not have root permissions to run Docker, [Singularity](https://singula
 ## Folder structure
 
 - **bin:** Scripts to run machine learning jobs.
+- **catalog:** Earthquake and background noise database. 
 - **config:** Configuration files. 
 - **containers:** Details on how to use containers for this project. 
+- **das_reader:** Legacy code for reading SEGY files.
 - **docs:** Documentation.
+- **hptuning:** Hyperparameter tuning for machine learning.
 - **log:** Directory for log files.
 - **ml_framework:** Machine learning framework.
-- **preprocessing:** All the data preprocessing steps.
+- **preprocessing:** Data preprocessing steps.
 - **processing_utils:** Processing utility functions.
-- **tfrecords:** Utility functions for converting files to TFRecords.
+- **tfrecords:** Utility functions for converting input files to TFRecords.
 
 ## Set the datapath for the project
 
