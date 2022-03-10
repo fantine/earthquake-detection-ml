@@ -30,7 +30,6 @@ If you do not have root permissions to run Docker, [Singularity](https://singula
 - **catalog:** Earthquake and background noise database. 
 - **config:** Configuration files. 
 - **containers:** Details on how to use containers for this project. 
-- **das_reader:** Legacy code for reading SEGY files.
 - **docs:** Documentation.
 - **hptuning:** Hyperparameter tuning for machine learning.
 - **log:** Directory for log files.

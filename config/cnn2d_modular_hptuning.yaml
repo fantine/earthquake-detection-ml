@@ -24,31 +24,31 @@ hyperparameters:
     min_value: 2
     max_value: 4
     scale: LOG2_SCALE
-#  - name: activation
-#    min_value: 0
-#    max_value: 1
-#    scale: LINEAR_SCALE
+  - name: activation
+    min_value: 0
+    max_value: 1
+    scale: LINEAR_SCALE
   - name: downsampling
     min_value: 0
     max_value: 1
     scale: LINEAR_SCALE
-#  - name: batchnorm    
-#    min_value: 0
-#    max_value: 1
-#    scale: LINEAR_SCALE
-#  - name: conv_dropout
-#    min_value: 0.0
-#    max_value: 0.2
-#    scale: DECIMAL_SCALE
+  - name: batchnorm    
+    min_value: 0
+    max_value: 1
+    scale: LINEAR_SCALE
+  - name: conv_dropout
+    min_value: 0.0
+    max_value: 0.2
+    scale: DECIMAL_SCALE
   - name: dense_dropout
     min_value: 0.2
     max_value: 0.6
     scale: DECIMAL_SCALE
-#  - name: regularizer
-#    min_value: 0
-#    max_value: 2
-#    scale: LINEAR_SCALE
-#  - name: regularizer_weight
-#    min_value: 1e-4
-#    max_value: 1e-2
-#    scale: LOG10_SCALE
+  - name: regularizer
+    min_value: 0
+    max_value: 2
+    scale: LINEAR_SCALE
+  - name: regularizer_weight
+    min_value: 1e-4
+    max_value: 1e-2
+    scale: LOG10_SCALE
