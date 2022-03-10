@@ -32,9 +32,6 @@ _FILE_EXTENSION = {
 logging.basicConfig(level=logging.INFO)
 
 
-# def _float_feature(data):
-#   return tf.train.Feature(float_list=tf.train.FloatList(value=data.reshape(-1)))
-
 def _bytes_feature(data):
   return tf.train.Feature(bytes_list=tf.train.BytesList(value=[data]))
 
@@ -60,40 +57,7 @@ class DataLoader():
     with h5py.File(filename, 'r') as f:
       data = f.get('input')[()]
       labels = f.get('label')[()]
-    # if self.min_val != 0.0 or self.max_val != 1.0:
-    #   inputs = self._clip_and_rescale(inputs)
-      # min_clip = np.array(
-      #     [-0.81,  -4.38,  -2.24, -14.0, -12.4, -12.7], dtype=np.float32)
-      # max_clip = np.array(
-      #     [0.81,  4.38,  2.24, 14.0, 12.4, 12.7], dtype=np.float32)
-      # min_clip = np.expand_dims(min_clip, axis=1)
-      # max_clip = np.expand_dims(max_clip, axis=1)
-      # inputs = np.clip(inputs, min_clip, max_clip)
-      # inputs = np.divide(inputs, max_clip - min_clip)
-    # clip_values = np.array([6.0, 7.5, 5.6, 38.0, 37.0, 42.0], dtype=np.float32)
-    # std_values = np.array(
-    #     [1.5769932,  2.2115157,  1.618729, 11.568308, 10.987169, 12.1504755],
-    #     dtype=np.float32
-    # )
-
-    # 99.9th
-    clip_values = np.array(
-        [178.15227144,  149.67709143, 124.48483422,
-         873.76586145, 827.1183634, 857.89569763], dtype=np.float32)
-    std_values = np.array(
-        [8.12889331,  7.08172751,  5.95884035, 41.0858224, 38.99603783,
-         41.18142846], dtype=np.float32)
-    # 99.5th
-    clip_values = np.array([38.73090591,  33.27859217,  29.42056465, 204.55128136,
-                            192.66809975, 207.06877602], dtype=np.float32)
-    std_values = np.array([3.79600604,  3.61591117,  3.02815053, 21.11769033, 19.97995761,
-                           21.58822516], dtype=np.float32)
-    # 99th
-    clip_values = np.array([19.12533085,  16.99479103,  14.8097368, 100.73499916,
-                            97.68273155, 106.57915833], dtype=np.float32)
-    std_values = np.array([2.60649068,  2.75844068,  2.20224507, 15.27593551, 14.63964137,
-                           15.97061868], dtype=np.float32)
-    # 98th
+    # 98th percentile
     clip_values = np.array([9.29433527,  9.75987179,  7.43926465, 50.09132858, 48.78753105,
                             54.2594487], dtype=np.float32)
     std_values = np.array([1.75401556,  2.2324876,  1.63497632, 11.47794848, 10.901093,
