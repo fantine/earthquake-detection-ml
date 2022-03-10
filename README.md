@@ -1,6 +1,7 @@
 # Earthquake detection via fiber-optic cables using deep learning
 
 - **Author:** Fantine Huot
+- **DOI:** [10.5281/zenodo.6344771](https://doi.org/10.5281/zenodo.6344771)
 
 ## Getting started
 
