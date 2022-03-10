@@ -55,23 +55,10 @@ class DataLoader():
     with h5py.File(filename, 'r') as f:
       inputs = f.get('input')[()]
       labels = f.get('label')[()]
- #   inputs = np.clip(inputs, -0.1, 0.1) / 0.03 # 2nd
- #   inputs = np.clip(inputs, -0.04, 0.04) / 0.018799046 # 5th
- #   inputs = np.clip(inputs, -0.024, 0.024) / 0.014088576 #10th
- #   inputs = np.clip(inputs, -0.012, 0.012) / 0.008918234 #20th
-    clip_value, std_value = 0.29420450955629374, 0.044633526  # 99th
-    clip_value, std_value = 0.15883579850196838, 0.034195222  # 98th
-    clip_value, std_value = 0.11209917262196534, 0.029403143  # 97th
-    clip_value, std_value = 0.08798494815826419, 0.02643562  # 96th
-    clip_value, std_value = 0.07310335338115692, 0.024334457  # 95th
-    clip_value, std_value = 0.041593365371227264, 0.01865723  # 90th
-    clip_value, std_value = 0.029902329668402672, 0.015722793  # 85th
-    clip_value, std_value = 0.023442808538675308, 0.013709098  # 80th
+    clip_value, std_value = 0.029902329668402672, 0.015722793  # 85th percentile
 
     inputs = np.clip(inputs, -clip_value, clip_value) / std_value
     inputs = np.float32(inputs)
-    # if self.min_val != 0.0 or self.max_val != 1.0:
-    #   inputs = self._clip_and_rescale(inputs)
     return inputs, labels
 
 
