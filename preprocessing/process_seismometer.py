@@ -90,18 +90,7 @@ def process_continuous(file_pattern, in_dir, out_dir, raw_window, low_freq,
     if not os.path.exists(out_file):
       data = read_hdf5(filename)
       if data is not None:
-        # data = _process(data, low_freq, high_freq, dt, q)
-       # clip_values = np.array([ 31.26569397,  26.99611814,  24.20824539, 166.83790821, 156.57493343, 170.47219654], dtype=np.float32)
-       # clip_values = np.expand_dims(clip_values, axis=1)
-       # std_values = np.array(
-       #     [ 4.199149 ,  3.9638348,  3.3899522, 23.58608  , 22.261927 ,
-       #  24.283094 ],
-       #     dtype=np.float32
-       # )
-       # std_values = np.expand_dims(std_values, axis=1)
-       # data = np.clip(data, -clip_values, clip_values) / std_values
         data = data.T
-     # out_file = filename.replace(in_dir, out_dir)
         os.makedirs(os.path.dirname(out_file), exist_ok=True)
         write_hdf5(out_file, data)
 
@@ -109,19 +98,19 @@ def process_continuous(file_pattern, in_dir, out_dir, raw_window, low_freq,
 def main():
   datatype = 'seismometer'
   datapath = os.path.join(parameters.raw_datapath, datatype)
-  # file_pattern = os.path.join(datapath, '*/*/*')
-  # process_windows(
-  #     file_pattern,
-  #     in_dir=parameters.raw_datapath,
-  #     out_dir=parameters.processed_datapath,
-  #     raw_window=parameters.raw_window_length,
-  #     detect_window=parameters.detect_window_length,
-  #     event_duration=parameters.event_duration,
-  #     low_freq=parameters.low_freq,
-  #     high_freq=parameters.high_freq,
-  #     dt=parameters.seismometer_dt,
-  #     q=parameters.seismometer_downsampling_factor,
-  # )
+  file_pattern = os.path.join(datapath, '*/*/*')
+  process_windows(
+      file_pattern,
+      in_dir=parameters.raw_datapath,
+      out_dir=parameters.processed_datapath,
+      raw_window=parameters.raw_window_length,
+      detect_window=parameters.detect_window_length,
+      event_duration=parameters.event_duration,
+      low_freq=parameters.low_freq,
+      high_freq=parameters.high_freq,
+      dt=parameters.seismometer_dt,
+      q=parameters.seismometer_downsampling_factor,
+  )
   file_pattern = os.path.join(datapath, 'continuous/*')
   process_continuous(
       file_pattern,
