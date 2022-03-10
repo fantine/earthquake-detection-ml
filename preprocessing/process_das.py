@@ -84,7 +84,6 @@ def main():
       low_freq=parameters.low_freq,
       high_freq=parameters.high_freq,
       dt=parameters.das_dt,
-      # clip_percentile=parameters.clip_percentile,
       q=parameters.das_downsampling_factor,
       channel_subset1=parameters.channel_subset1,
       channel_subset2=parameters.channel_subset2
