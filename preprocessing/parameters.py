@@ -60,10 +60,15 @@ passive_das_sampling = 50  # samples per second
 clip_percentile = 99.5
 detect_window_length = 20.48
 event_duration = 12
+
 das_dt = 0.02
 das_downsampling_factor = 2
+das_clip_val = 0.024
+das_norm_val = 0.014088576
+
 seismometer_dt = 0.01
 seismometer_downsampling_factor = 4
+
 channel_subset1 = list(range(13, 301))
 channel_subset2 = list(range(328, 616))
 
